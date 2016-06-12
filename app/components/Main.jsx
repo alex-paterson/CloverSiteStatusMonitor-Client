@@ -2,8 +2,9 @@ var React = require('react');
 import {connect} from 'react-redux';
 
 import LoadingIndicator from './LoadingIndicator';
-import Navbar from './Navbar';
+import Alerts from './Alerts';
 import Footer from './Footer';
+import Navbar from './Navbar';
 import {reloadAllTests, getUserPayload} from 'actions';
 
 export var Main = React.createClass({
@@ -29,6 +30,7 @@ export var Main = React.createClass({
     return (
       <div>
         <Navbar/>
+        <Alerts/>
         <div style={hideIfTrue(loading)}>
           <div style={{minHeight: "70vh"}}>
             {this.props.children}

@@ -1,0 +1,33 @@
+.alerts {
+  position: fixed;
+  top: 0;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+  z-index: 2;
+  max-width: 50%;
+  > div {
+    margin: 1rem 0rem 1rem 1rem;
+    padding: 0.5rem;
+    &.danger {
+      background-color: $light-red;
+      color: $dark-red;
+      border: 1px solid $alert-border-red;
+    }
+    &.success {
+      background-color: $light-green;
+      color: $dark-green;
+      border: 1px solid $alert-border-green;
+    }
+    border-radius: 5px;
+    cursor: pointer;
+    .flex {
+      display: flex;
+      justify-content: space-between;
+      .settings-action {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

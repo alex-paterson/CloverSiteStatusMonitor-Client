@@ -3,11 +3,11 @@ import axios from 'axios';
 import {USER_URL} from 'api';
 import {toggleLoadingScreen} from './loadingActions';
 import {setAllSites} from './siteActions';
+import {addAlert} from './alertActions';
+
 var AUTH_TOKEN = () => {
   return localStorage.getItem('token');
 }
-
-
 
 export function getUserPayload() {
   return function(dispatch) {

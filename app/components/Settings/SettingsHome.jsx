@@ -10,7 +10,6 @@ export var SettingsHome = React.createClass({
 
     var renderSiteItems = () => {
       return sites.map((site) => {
-        console.log("SettingsHome mapping site", site);
         return (
           <SiteItem key={site._id} siteId={site._id}/>
         );

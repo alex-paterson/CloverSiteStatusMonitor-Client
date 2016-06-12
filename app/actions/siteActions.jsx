@@ -3,6 +3,7 @@ import axios from 'axios';
 import {QUERY_URL, USER_SITES_URL, SITE_URL, TESTS_URL, TEST_URL} from 'api';
 import {toggleLoadingScreen} from './loadingActions';
 import {addAlert} from './alertActions';
+
 var AUTH_TOKEN = () => {
   return localStorage.getItem('token');
 }
