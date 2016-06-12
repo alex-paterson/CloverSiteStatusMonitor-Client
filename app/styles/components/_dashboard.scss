@@ -1,0 +1,85 @@
+table tbody tr:nth-child(even) {
+  background-color: transparent;
+}
+
+.dashboard {
+  .column {
+    div {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+  }
+}
+
+table {
+  thead {
+    background-color: transparent;
+    border: none;
+
+    color: $text-grey;
+    font-family: "proxima-nova",sans-serif;
+    font-style: normal;
+    font-weight: 600;
+
+    th {
+      border-top: 1px;
+      color: $dark-grey;
+      font-family: "proxima-nova",sans-serif;
+      font-style: normal;
+      a {
+        &:hover, &:link, &:active, &:visited {
+          color: $purple;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  tbody {
+    border: none;
+    tr {
+      border-top: 2px solid #f1f1f1;
+      td {
+        border-top: 1px;
+        color: $dark-grey;
+        font-family: "proxima-nova",sans-serif;
+        font-style: normal;
+        &.status-cell {
+          text-align: right;
+          i.okay {
+            color: $green-success;
+          }
+          i.failure {
+            color: $red-fail;
+          }
+        }
+        a {
+          &.site-url {
+            color: $purple;
+            font-weight: 600;
+             &:link, &:visited {
+              color: $purple;
+              font-weight: 600;
+            }
+            &:hover, &:active {
+             color: $dark-purple;
+             font-weight: 600;
+            }
+          }
+          &.settings-url {
+            color: $text-grey;
+            font-weight: 600;
+            &:link, &:visited {
+              color: $text-grey;
+              font-weight: 600;
+            }
+            &:hover, &:active {
+              color: $dark-grey;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}

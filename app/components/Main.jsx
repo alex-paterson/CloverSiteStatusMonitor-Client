@@ -1,0 +1,52 @@
+var React = require('react');
+import {connect} from 'react-redux';
+
+import LoadingIndicator from './LoadingIndicator';
+import Navbar from './Navbar';
+import Footer from './Footer';
+import {reloadAllTests, getUserPayload} from 'actions';
+
+export var Main = React.createClass({
+  componentWillMount: function() {
+    var {sites} = this.props;
+    if (sites.length != 0) {
+      this.props.dispatch(reloadAllTests());
+    } else {
+      this.props.dispatch(getUserPayload());
+    }
+  },
+  render: function() {
+    var {loading} = this.props;
+
+    var hideIfTrue = (bool) => {
+      if (bool) {
+        return {
+          display: 'none'
+        }
+      }
+    }
+
+    return (
+      <div>
+        <Navbar/>
+        <div style={hideIfTrue(loading)}>
+          <div style={{minHeight: "70vh"}}>
+            {this.props.children}
+          </div>
+        </div>
+        <div style={hideIfTrue(!loading)}>
+          <LoadingIndicator/>
+        </div>
+        <Footer/>
+      </div>
+    );
+  }
+});
+
+
+module.exports = connect((state) => {
+  return {
+    loading: state.loading.screenIsLoading,
+    sites: state.sites.siteObjects
+  }
+})(Main);

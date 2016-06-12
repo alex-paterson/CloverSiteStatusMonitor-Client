@@ -1,0 +1,83 @@
+table tbody tr:nth-child(even) {
+  background-color: transparent;
+}
+
+table {
+  thead {
+    background-color: transparent;
+    border: none;
+
+    color: $text-grey;
+    font-family: "proxima-nova",sans-serif;
+    font-style: normal;
+    font-weight: 600;
+
+    th {
+      border-top: 1px;
+      color: $dark-grey;
+      font-family: "proxima-nova",sans-serif;
+      font-style: normal;
+      a {
+        &:hover, &:link, &:active, &:visited {
+          color: $purple;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  tbody {
+    border: none;
+    tr {
+      border-top: 2px solid $light-grey;
+      td {
+        border-top: 1px;
+        color: $dark-grey;
+        font-family: "proxima-nova",sans-serif;
+        font-style: normal;
+        span.settings-action {
+          padding: 0 1rem;
+          i.fa-cog {
+            cursor: pointer;
+            color: $text-grey;
+            &:hover {
+              color: $green-success;
+            }
+          }
+          i.fa-close {
+            cursor: pointer;
+            color: $text-grey;
+            &:hover {
+              color: $red-fail;
+            }
+          }
+        }
+        a {
+          &.site-url {
+            color: $purple;
+            font-weight: 600;
+             &:link, &:visited {
+              color: $purple;
+              font-weight: 600;
+            }
+            &:hover, &:active {
+             color: $dark-purple;
+             font-weight: 600;
+            }
+          }
+          &.settings-url {
+            color: $text-grey;
+            font-weight: 600;
+            &:link, &:visited {
+              color: $text-grey;
+              font-weight: 600;
+            }
+            &:hover, &:active {
+              color: $dark-grey;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+}

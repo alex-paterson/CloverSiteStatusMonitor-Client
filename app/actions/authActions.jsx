@@ -1,0 +1,106 @@
+import axios from 'axios';
+import {browserHistory} from 'react-router';
+
+import {SIGNIN_URL, SIGNUP_URL} from 'api';
+
+import * as loadingActions from './loadingActions';
+import * as alertActions from './alertActions';
+
+
+export function loginUser({email, password}) {
+  return function(dispatch) {
+    dispatch(loadingActions.toggleLoadingScreen("Logging in..."));
+    axios.post(SIGNIN_URL, {email: email.toLowerCase(), password})
+      .then((response) => {
+        dispatch(authUser(response.data.user_id));
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user_id', response.data.user_id);
+        browserHistory.push('/dashboard');
+        dispatch(loadingActions.toggleLoadingScreen());
+      })
+      .catch((response) => {
+        dispatch(alertActions.addAlert("Incorrect username or password.", 'danger'));
+        dispatch(loadingActions.toggleLoadingScreen());
+      });
+  }
+}
+
+export function signupUser({email, password}) {
+  return function(dispatch) {
+    dispatch(loadingActions.toggleLoadingScreen("Signing up..."));
+    axios.post(SIGNUP_URL, {email: email.toLowerCase(), password})
+      .then(response => {
+        dispatch(authUser(response.data.user_id));
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user_id', response.data.user_id);
+        browserHistory.push('/dashboard');
+        dispatch(loadingActions.toggleLoadingScreen());
+      })
+      .catch((response) => {
+        if (response.data && response.data.error) {
+          dispatch(alertActions.addAlert(response.data.error, 'danger'));
+        } else if (response.status === 422) {
+          dispatch(alertActions.addAlert("Email address taken.", 'danger'));
+        } else if (response.status === 404 || response.status === 500) {
+          dispatch(alertActions.addAlert("Internal error.", 'danger'));
+        } else {
+          dispatch(alertActions.addAlert("Could not create alert.", 'danger'));
+        }
+        dispatch(loadingActions.toggleLoadingScreen());
+      });
+  }
+}
+
+// export function submitResetPassword({email}) {
+//   return function(dispatch) {
+//     dispatch(loadingActions.startLoadingScreen("Submitting reset request..."));
+//     axios.post(RESET_PASSWORD_URL, {email: email.toLowerCase()})
+//       .then(response => {
+//         dispatch(alertActions.addAlert("Check your email for a password reset link!", 'success'));
+//         dispatch(loadingActions.stopLoadingScreen());
+//       })
+//       .catch(response => {
+//         if (response.data && response.data.error) {
+//           dispatch(alertActions.addAlert(response.data.error, 'danger'));
+//         } else if (response.status === 500) {
+//           dispatch(alertActions.addAlert("Internal error.", 'danger'));
+//         } else {
+//           dispatch(alertActions.addAlert("Could not reset password. Please contact support.", 'danger'));
+//         }
+//         dispatch(loadingActions.stopLoadingScreen());
+//       });
+//   }
+// }
+//
+// export function submitResetPasswordComplete({password}, user_id, token) {
+//   return function(dispatch) {
+//     dispatch(loadingActions.startLoadingScreen("Resetting password..."));
+//     axios.post(RESET_PASSWORD_COMPLETE_URL(user_id), {password, token})
+//       .then(response => {
+//         dispatch(alertActions.addAlert("Password reset!", 'success'));
+//         browserHistory.push("/login");
+//         dispatch(loadingActions.stopLoadingScreen());
+//       })
+//       .catch(response => {
+//         console.log(response);
+//         if (response.data && response.data.error) {
+//           dispatch(alertActions.addAlert(response.data.error, 'danger'));
+//         } else if (response.status === 500) {
+//           dispatch(alertActions.addAlert("Internal error.", 'danger'));
+//         } else {
+//           dispatch(alertActions.addAlert("Could not reset password. Please contact support.", 'danger'));
+//         }
+//         dispatch(loadingActions.stopLoadingScreen());
+//       });
+//   }
+// }
+
+export function signoutUser() {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user_id');
+  return {type: 'UNAUTH_USER'};
+}
+
+export function authUser(user_id) {
+  return {type: 'AUTH_USER', user_id};
+}
