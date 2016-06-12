@@ -3,6 +3,7 @@ var path = require('path');
 
 // Create out app
 var app = express();
+const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3000;
 
 app.use(function(req, res, next) {
@@ -19,6 +20,6 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'public', 'index.html'))
 });
 
-app.listen(PORT, function() {
+app.listen(HOST, function() {
   console.log('Express server is up on', PORT)
 });
