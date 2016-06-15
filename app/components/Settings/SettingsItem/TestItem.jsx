@@ -6,7 +6,7 @@ import LoadingIndicator from '../../LoadingIndicator';
 import {beginDeleteTest} from 'actions';
 
 export var TestItem = React.createClass({
-  onDeleteSite: function() {
+  onDeleteTest: function() {
     var {dispatch, siteId, startLoading, endLoading} = this.props;
     startLoading("Deleting item...");
     dispatch(beginDeleteTest(siteId, this.props.testObject._id)).then(() => {
@@ -25,7 +25,7 @@ export var TestItem = React.createClass({
           <p>{match}</p>
         </div>
         <div style={{textAlign: 'right'}}>
-          <span className="settings-action" onClick={this.onDeleteSite}><i className="fa fa-close"></i></span>
+          <span className="settings-action" onClick={this.onDeleteTest}><i className="fa fa-close"></i></span>
         </div>
       </div>
     );

@@ -82,16 +82,13 @@ export function beginCreateTest(siteId, testObject) {
 
 export function beginDeleteTest(siteId, testId) {
   return (dispatch, getStore) => {
-    dispatch(startLoading(mainLoader, "Deleting test..."));
     return axios.delete(TEST_URL(USER_ID(), siteId, testId), {headers: {authorization: AUTH_TOKEN()} })
     .then((response) => {
       dispatch(updateSite(response.data.site));
-      dispatch(endLoading(mainLoader));
     })
     .catch((response) => {
       console.log(response);
       dispatch(addAlert("Could not delete test.", 'danger'));
-      dispatch(endLoading(mainLoader));
     });
   }
 }
