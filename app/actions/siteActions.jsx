@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 import {QUERY_URL, USER_SITES_URL, SITE_URL, TESTS_URL, TEST_URL} from 'api';
-import {toggleLoadingScreen} from './loadingActions';
+import {startLoading, endLoading} from 'react-loading-indicator-component';
+import {mainLoader} from 'loaders';
 import {addAlert} from './alertActions';
 
 var AUTH_TOKEN = () => {
@@ -52,69 +53,71 @@ export var setAllSites = (sites) => {
 
 export function beginCreateSite(url) {
   return (dispatch, getStore) => {
-    dispatch(toggleLoadingScreen("Creating site..."));
-    axios.post(USER_SITES_URL(USER_ID()), {url}, {headers: {authorization: AUTH_TOKEN()} })
+    dispatch(startLoading(mainLoader, "Creating site..."));
+    return axios.post(USER_SITES_URL(USER_ID()), {url}, {headers: {authorization: AUTH_TOKEN()} })
     .then((response) => {
       dispatch(createSite(response.data.site));
-      dispatch(toggleLoadingScreen(""));
+      dispatch(endLoading(mainLoader));
     })
     .catch((response) => {
+      console.log(response);
       dispatch(addAlert("Could not create site.", 'danger'));
-      dispatch(toggleLoadingScreen(""));
+      dispatch(endLoading(mainLoader));
     });
   }
 }
 
 export function beginCreateTest(siteId, testObject) {
   return (dispatch, getStore) => {
-    dispatch(toggleLoadingScreen("Creating test..."));
-    axios.post(TESTS_URL(USER_ID(), siteId), testObject, {headers: {authorization: AUTH_TOKEN()} })
+    dispatch(startLoading(mainLoader, "Creating test..."));
+    return axios.post(TESTS_URL(USER_ID(), siteId), testObject, {headers: {authorization: AUTH_TOKEN()} })
     .then((response) => {
-      console.log(response);
       dispatch(updateSite(response.data.site));
-      dispatch(toggleLoadingScreen(""));
+      dispatch(endLoading(mainLoader));
     })
     .catch((response) => {
+      console.log(response);
       dispatch(addAlert("Could not create test.", 'danger'));
-      dispatch(toggleLoadingScreen(""));
+      dispatch(endLoading(mainLoader));
     });
   }
 }
 
 export function beginDeleteTest(siteId, testId) {
   return (dispatch, getStore) => {
-    dispatch(toggleLoadingScreen("Deleting test..."));
-    axios.delete(TEST_URL(USER_ID(), siteId, testId), {headers: {authorization: AUTH_TOKEN()} })
+    dispatch(startLoading(mainLoader, "Deleting test..."));
+    return axios.delete(TEST_URL(USER_ID(), siteId, testId), {headers: {authorization: AUTH_TOKEN()} })
     .then((response) => {
       dispatch(updateSite(response.data.site));
-      dispatch(toggleLoadingScreen(""));
+      dispatch(endLoading(mainLoader));
     })
     .catch((response) => {
+      console.log(response);
       dispatch(addAlert("Could not delete test.", 'danger'));
-      dispatch(toggleLoadingScreen(""));
+      dispatch(endLoading(mainLoader));
     });
   }
 }
 
 export function beginDeleteSite(site_id) {
   return (dispatch, getStore) => {
-    dispatch(toggleLoadingScreen("Deleting site..."));
-    axios.delete(SITE_URL(USER_ID(), site_id), {headers: {authorization: AUTH_TOKEN()}})
+    dispatch(startLoading(mainLoader, "Deleting site..."));
+    return axios.delete(SITE_URL(USER_ID(), site_id), {headers: {authorization: AUTH_TOKEN()}})
       .then((response) => {
         dispatch(deleteSite(site_id));
-        dispatch(toggleLoadingScreen(""));
+        dispatch(endLoading(mainLoader));
       })
       .catch((response) => {
+        console.log(response);
         dispatch(addAlert("Could not delete site.", 'danger'));
-        dispatch(toggleLoadingScreen(""));
+        dispatch(endLoading(mainLoader));
       });
   }
 }
 
 export function beginUpdateSite(site_id, {name, url}) {
   return (dispatch, getStore) => {
-    dispatch(toggleLoadingScreen("Updating site..."));
-    axios.patch(
+    return axios.patch(
       SITE_URL(USER_ID(), site_id), {
         name,
         url,
@@ -125,10 +128,9 @@ export function beginUpdateSite(site_id, {name, url}) {
       }
     ).then((response) => {
       dispatch(updateSite(response.data.site));
-      dispatch(toggleLoadingScreen(""));
     }).catch((response) => {
+      console.log(response);
       dispatch(addAlert("Could not update site.", 'danger'));
-      dispatch(toggleLoadingScreen(""));
     });
   }
 }
@@ -151,14 +153,14 @@ export function reloadAllTests(sites) {
 
 // export function getSites() {
 //   return function(dispatch) {
-//     dispatch(toggleLoadingScreen());
+//     dispatch(startLoading(mainLoader, ));
 //     axios.get(USER_SITES_URL)
 //       .then((response) => {
 //         dispatch(setAllSites(response.data.sites));
-//         dispatch(toggleLoadingScreen());
+//         dispatch(startLoading(mainLoader, ));
 //       })
 //       .catch((response) => {
-//         dispatch(toggleLoadingScreen());
+//         dispatch(startLoading(mainLoader, ));
 //       });
 //   }
 // }
@@ -167,7 +169,7 @@ export function reloadAllTests(sites) {
 export function reloadTest(site_id, test_id, url, match) {
   return function(dispatch) {
     dispatch(setSiteStatus(site_id, test_id, 'loading'));
-    axios.get(QUERY_URL, {params: {url, match}, headers: {authorization: AUTH_TOKEN()}})
+    return axios.get(QUERY_URL, {params: {url, match}, headers: {authorization: AUTH_TOKEN()}})
       .then((response) => {
         if (response.data.success) {
           dispatch(setSiteStatus(site_id, test_id, 'okay'));

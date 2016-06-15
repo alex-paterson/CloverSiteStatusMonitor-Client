@@ -9,10 +9,10 @@ import {reloadAllTests, getUserPayload} from 'actions';
 
 export var Main = React.createClass({
   componentWillMount: function() {
-    var {sites} = this.props;
-    if (sites.length != 0) {
+    var {sites, authenticated} = this.props;
+    if (sites && sites.length > 0) {
       this.props.dispatch(reloadAllTests());
-    } else {
+    } else if (authenticated) {
       this.props.dispatch(getUserPayload());
     }
   },
@@ -49,6 +49,7 @@ export var Main = React.createClass({
 module.exports = connect((state) => {
   return {
     loading: state.loading.screenIsLoading,
-    sites: state.sites.siteObjects
+    sites: state.sites.siteObjects,
+    authenticated: state.auth.authenticated
   }
 })(Main);

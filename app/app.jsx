@@ -2,11 +2,14 @@ var React = require('react');
 var {Route, Router, IndexRoute, browserHistory} = require('react-router');
 var ReactDOM = require('react-dom');
 import {Provider} from 'react-redux';
+import {LoadingComponent} from 'react-loading-indicator-component';
 
 var store = require('./store').configureStore();
 
 
 import SetRouterSite from './components/HOC/SetRouterSite';
+
+import LoadingIndicator from 'LoadingIndicator';
 
 import Main from 'Main';
   import Home from 'Home';
@@ -19,6 +22,7 @@ import Main from 'Main';
     import SettingsItem from './components/Settings/SettingsItem';
 
 import {authUser} from 'actions';
+import {userPayloadLoader} from 'loaders';
 
 
 // Auto-authenticate
@@ -27,6 +31,7 @@ var user_id = localStorage.getItem('user_id');
 if (token && user_id) {
   store.dispatch(authUser(user_id));
 }
+
 
 
 $(document).foundation();
@@ -38,14 +43,16 @@ ReactDOM.render(
     <Router history={browserHistory}>
       <Route path="/" component={Main}>
         <IndexRoute component={Home}/>
-        <Route path="dashboard" component={Dashboard}/>
-        <Route path="account" component={Account}/>
         <Route path="login" component={Login}/>
         <Route path="signup" component={Signup}/>
-        <Route path="settings" component={Settings}>
+
+        <Route path="dashboard" component={LoadingComponent(Dashboard, LoadingIndicator, [userPayloadLoader])}/>
+        <Route path="account" component={LoadingComponent(Account, LoadingIndicator, [userPayloadLoader])}/>
+        <Route path="settings" component={LoadingComponent(Settings, LoadingIndicator, [userPayloadLoader])}>
           <IndexRoute component={SettingsHome}/>
           <Route path=":siteId" component={SetRouterSite(SettingsItem)}/>
         </Route>
+
       </Route>
     </Router>
   </Provider>,

@@ -11,8 +11,9 @@ export {
 } from './authActions';
 
 export {
-  toggleLoadingScreen,
-} from './loadingActions';
+  startLoading,
+  endLoading
+} from 'react-loading-indicator-component';
 
 export {
   reloadAllTests,

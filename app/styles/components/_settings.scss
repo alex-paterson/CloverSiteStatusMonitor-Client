@@ -34,23 +34,6 @@ table {
         color: $dark-grey;
         font-family: "proxima-nova",sans-serif;
         font-style: normal;
-        span.settings-action {
-          padding: 0 1rem;
-          i.fa-cog {
-            cursor: pointer;
-            color: $text-grey;
-            &:hover {
-              color: $green-success;
-            }
-          }
-          i.fa-close {
-            cursor: pointer;
-            color: $text-grey;
-            &:hover {
-              color: $red-fail;
-            }
-          }
-        }
         a {
           &.site-url {
             color: $purple;
@@ -78,6 +61,24 @@ table {
           }
         }
       }
+    }
+  }
+}
+
+span.settings-action {
+  padding: 0 1rem;
+  i.fa-cog {
+    cursor: pointer;
+    color: $text-grey;
+    &:hover {
+      color: $green-success;
+    }
+  }
+  i.fa-close {
+    cursor: pointer;
+    color: $text-grey;
+    &:hover {
+      color: $red-fail;
     }
   }
 }

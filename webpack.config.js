@@ -45,6 +45,7 @@ module.exports = {
       applicationStyles: 'app/styles/app.scss',
       actions: 'app/actions',
       helpers: 'app/helpers',
+      loaders: 'app/loaders',
       api: 'app/api'
     },
     extensions: ['', '.js', '.jsx']

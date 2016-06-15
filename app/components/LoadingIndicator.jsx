@@ -3,9 +3,10 @@ import {connect} from 'react-redux';
 
 export var LoadingIndicator = React.createClass({
   render: function() {
+    var {loadingText} = this.props;
     return (
       <div className="page-loading-indicator">
-        <h1>{this.props.text}</h1>
+        <h1>{loadingText}</h1>
       </div>
     );
   }

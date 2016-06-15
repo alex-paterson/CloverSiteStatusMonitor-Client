@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 
-// Create out app
+// Create our app
 var app = express();
 const HOST = process.env.HOST || '127.0.0.1';
 const PORT = process.env.PORT || 3000;

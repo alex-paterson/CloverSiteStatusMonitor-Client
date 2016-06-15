@@ -1,19 +1,26 @@
 var React = require('react');
 import {connect} from 'react-redux';
+import {LoadingComponent} from 'react-loading-indicator-component';
 
+import LoadingIndicator from '../../LoadingIndicator';
 import {beginCreateTest} from 'actions';
 
 export var NewTestForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    var {dispatch, site} = this.props;
-    var extension = this.refs.extensionText.value;
-    var name = this.refs.nameText.value;
-    var match = this.refs.matchText.value;
-    this.props.dispatch(beginCreateTest(site._id, {match, name, extension}));
-    this.refs.extensionText.value = "";
-    this.refs.nameText.value = "";
-    this.refs.matchText.value = "";
+    var {dispatch, site, startLoading, endLoading} = this.props;
+    var {extensionText, nameText, matchText} = this.refs;
+    var extension = extensionText.value;
+    var name = nameText.value;
+    var match = matchText.value;
+
+    startLoading("Creating test...");
+    dispatch(beginCreateTest(site._id, {match, name, extension})).then(() => {
+      endLoading();
+    });
+    extensionText.value = "";
+    nameText.value = "";
+    matchText.value = "";
   },
   render: function() {
 
@@ -48,4 +55,4 @@ export var NewTestForm = React.createClass({
   }
 });
 
-module.exports = connect()(NewTestForm);
+module.exports = connect()(LoadingComponent(NewTestForm, LoadingIndicator));

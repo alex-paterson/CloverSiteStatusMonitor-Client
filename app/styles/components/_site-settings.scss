@@ -9,37 +9,39 @@
   form.test {
     border-bottom: 2px solid #f1f1f1;
   }
-  table{
-    tbody {
-      border: none;
-      tr {
-        border-bottom: 2px solid #f1f1f1;
+  .siteTestsTable {
+    border-top: 2px solid #f1f1f1;
+    margin-bottom: 1rem;
+    .table-row {
+      align-items: center;
+      border-bottom: 2px solid #f1f1f1;
+      display: flex;
+      justify-content: space-between;
+      .info-cell {
+        font-family: "proxima-nova",sans-serif;
+        h4 {
+          color: $text-grey;
+          font-size: 2rem;
+          font-weight: 600;
+          margin-bottom: 0px;
+        }
+        h5 {
+          color: $purple;
+          font-size: 1rem;
+          font-weight: 400;
+          margin-bottom: 0px;
+        }
+        p {
+          font-weight: 600;
+          color: $mild-light-grey;
+          font-size: 0.75rem;
+          margin: 0px;
+        }
       }
     }
   }
   hr {
     margin: 2rem -3000px;
     padding: 0rem 3000px;
-  }
-  td {
-    font-family: "proxima-nova",sans-serif;
-    h4 {
-      color: $text-grey;
-      font-size: 2rem;
-      font-weight: 600;
-      margin-bottom: 0px;
-    }
-    h5 {
-      color: $purple;
-      font-size: 1rem;
-      font-weight: 400;
-      margin-bottom: 0px;
-    }
-    p {
-      font-weight: 600;
-      color: $mild-light-grey;
-      font-size: 0.75rem;
-      margin: 0px;
-    }
   }
 }

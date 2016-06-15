@@ -2,24 +2,13 @@ var React = require('react');
 import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 
-import {beginUpdateSite} from 'actions';
-import {reduxForm, initialize} from 'redux-form';
-import {getSiteItemFromSitesArray} from 'helpers';
-
 import NewTestForm from './SettingsItem/NewTestForm';
+import UpdateTestForm from './SettingsItem/UpdateTestForm';
 import TestItem from './SettingsItem/TestItem';
 
 export var SettingsItem = React.createClass({
-  onSubmit: function() {
-    var {dispatch, params: {siteId}, fields: {name, url}} = this.props;
-    dispatch(beginUpdateSite(siteId, {name: name.value, url: url.value}));
-  },
-  goBack: function(e) {
-    e.preventDefault()
-    browserHistory.push("/settings");
-  },
   render: function() {
-    var {handleSubmit, site, fields: {name, url}} = this.props;
+    var {site} = this.props;
 
     var renderTests = () => {
       var tests = site.tests;
@@ -29,11 +18,7 @@ export var SettingsItem = React.createClass({
         });
       } else {
         return (
-          <tbody>
-            <tr>
-              <td colSpan="3"><h4>No tests</h4></td>
-            </tr>
-          </tbody>
+          <h3 style={{textAlign: 'center', padding: '2rem 0rem', borderBottom: '2px solid #f1f1f1'}}>No tests</h3>
         );
       }
     }
@@ -41,28 +26,12 @@ export var SettingsItem = React.createClass({
     if (site) {
       return (
         <div className="site-settings">
-          <form onSubmit={handleSubmit(this.onSubmit)}>
-
-            <label className="solid-text-grey">Name {name.touched && name.error && <span className="login-form-error"> - {name.error}</span>}</label>
-            <input type="text" ref="name" className="h2-input" placeholder={site.name}  {...name}/>
-
-            <label className="solid-text-grey">URL {url.touched && url.error && <span className="login-form-error"> - {url.error}</span>}</label>
-            <input type="text" ref="url" className="h2-input" placeholder={site.url} {...url}/>
-
-            <div className="row">
-              <div className="columns small-6">
-                <button onClick={this.goBack} className="button expanded hollow">Back</button>
-              </div>
-              <div className="columns small-6">
-                <button className="button expanded">Update</button>
-              </div>
-            </div>
-          </form>
+          <UpdateTestForm siteId={site._id} />
           <hr/>
           <h1 syle={{marginTop: '3rem'}}>Tests</h1>
-          <table>
+          <div className="siteTestsTable">
             {renderTests()}
-          </table>
+          </div>
           <NewTestForm site={site}/>
         </div>
       );
@@ -75,27 +44,4 @@ export var SettingsItem = React.createClass({
 });
 
 
-function validate(formProps) {
-  var errors = {};
-  if (!formProps.name) {
-    errors.name = "Please enter a name";
-  }
-  if (!formProps.url) {
-    errors.url = "Please enter a url";
-  }
-  return errors;
-}
-
-var mapStateToProps = (state) => {
-  return {
-    sites: state.sites.siteObjects
-  }
-}
-
-var formOptions = {
-  form: 'settings-item',
-  fields: ['name', 'url'],
-  validate
-}
-
-export default reduxForm(formOptions, mapStateToProps, null)(SettingsItem);
+export default SettingsItem;
