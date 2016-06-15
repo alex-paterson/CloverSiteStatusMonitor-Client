@@ -14,7 +14,7 @@ var AUTH_TOKEN = () => {
 export function getUserPayload() {
   return function(dispatch) {
     dispatch(startLoading(userPayloadLoader, "Logging in..."));
-    axios.get(USER_URL(localStorage.getItem('user_id')), {
+    return axios.get(USER_URL(localStorage.getItem('user_id')), {
       headers: { authorization: AUTH_TOKEN() }
     })
       .then((response) => {
@@ -22,6 +22,7 @@ export function getUserPayload() {
         dispatch(endLoading(userPayloadLoader));
       })
       .catch((response) => {
+        console.log(response);
         dispatch(endLoading(userPayloadLoader));
       });
   }

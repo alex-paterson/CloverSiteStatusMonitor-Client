@@ -17,16 +17,8 @@ export var SettingsHome = React.createClass({
     }
     if (sites && sites.length != 0) {
       return (
-        <div>
-          <table>
-            <thead>
-              <tr>
-                <th>Website</th>
-                <th></th>
-              </tr>
-            </thead>
-            {renderSiteItems()}
-          </table>
+        <div className="settings-table">
+          {renderSiteItems()}
           <NewSiteForm />
         </div>
       );

@@ -1,18 +1,24 @@
 var React = require('react');
 import {connect} from 'react-redux';
+import {LoadingComponent} from 'react-loading-indicator-component';
 
+import LoadingIndicator from '../../LoadingIndicator';
 import {beginCreateSite} from 'actions';
 
 export var NewSiteForm = React.createClass({
   handleSubmit: function(e) {
     e.preventDefault();
-    this.props.dispatch(beginCreateSite(this.refs.newSiteText.value));
+    var {dispatch, startLoading, endLoading} = this.props;
+    startLoading("Creating site...");
+    dispatch(beginCreateSite(this.refs.newSiteText.value)).then(() => {
+      endLoading();
+    });
     this.refs.newSiteText.value = "";
   },
   render: function() {
 
     return (
-      <form onSubmit={this.handleSubmit} style={{width: '100%'}}>
+      <form onSubmit={this.handleSubmit} style={{width: '100%', marginTop: '2rem'}}>
         <div className="row">
           <div className="large-12 columns">
             <div className="row collapse" style={{width: '100%'}}>
@@ -32,4 +38,4 @@ export var NewSiteForm = React.createClass({
   }
 });
 
-module.exports = connect()(NewSiteForm);
+module.exports = connect()(LoadingComponent(NewSiteForm, LoadingIndicator));

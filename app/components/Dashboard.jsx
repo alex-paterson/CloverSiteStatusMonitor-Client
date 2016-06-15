@@ -26,7 +26,7 @@ export var Dashboard = React.createClass({
     var renderTable = (siteObjects) => {
       if (siteObjects.length != 0) {
         return (
-          <table>
+          <table className="dashboard">
             <thead>
               <tr>
                 <th>Website</th>

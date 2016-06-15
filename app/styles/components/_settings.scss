@@ -1,63 +1,55 @@
-table tbody tr:nth-child(even) {
-  background-color: transparent;
-}
+div.settings-table {
+  border-top: 2px solid $light-grey;
+  color: $text-grey;
+  font-family: "proxima-nova",sans-serif;
+  font-style: normal;
+  font-weight: 600;
 
-table {
-  thead {
-    background-color: transparent;
-    border: none;
-
-    color: $text-grey;
+  .site-item {
+    border-bottom: 2px solid $light-grey;
+    color: $dark-grey;
     font-family: "proxima-nova",sans-serif;
     font-style: normal;
-    font-weight: 600;
 
-    th {
+    padding: 1rem 0;
+
+    display: flex;
+    justify-content: space-between;
+
+    a {
+      &:hover, &:link, &:active, &:visited {
+        color: $purple;
+        font-weight: 600;
+      }
+    }
+    div {
       border-top: 1px;
       color: $dark-grey;
       font-family: "proxima-nova",sans-serif;
       font-style: normal;
       a {
-        &:hover, &:link, &:active, &:visited {
+        &.site-url {
           color: $purple;
           font-weight: 600;
-        }
-      }
-    }
-  }
-  tbody {
-    border: none;
-    tr {
-      border-top: 2px solid $light-grey;
-      td {
-        border-top: 1px;
-        color: $dark-grey;
-        font-family: "proxima-nova",sans-serif;
-        font-style: normal;
-        a {
-          &.site-url {
+           &:link, &:visited {
             color: $purple;
             font-weight: 600;
-             &:link, &:visited {
-              color: $purple;
-              font-weight: 600;
-            }
-            &:hover, &:active {
-             color: $dark-purple;
-             font-weight: 600;
-            }
           }
-          &.settings-url {
+          &:hover, &:active {
+           color: $dark-purple;
+           font-weight: 600;
+          }
+        }
+        &.settings-url {
+          color: $text-grey;
+          font-weight: 600;
+          &:link, &:visited {
             color: $text-grey;
             font-weight: 600;
-            &:link, &:visited {
-              color: $text-grey;
-              font-weight: 600;
-            }
-            &:hover, &:active {
-              color: $dark-grey;
-              font-weight: 600;
-            }
+          }
+          &:hover, &:active {
+            color: $dark-grey;
+            font-weight: 600;
           }
         }
       }

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 
 import NewTestForm from './SettingsItem/NewTestForm';
-import UpdateTestForm from './SettingsItem/UpdateTestForm';
+import UpdateSiteForm from './SettingsItem/UpdateSiteForm';
 import TestItem from './SettingsItem/TestItem';
 
 export var SettingsItem = React.createClass({
@@ -26,7 +26,7 @@ export var SettingsItem = React.createClass({
     if (site) {
       return (
         <div className="site-settings">
-          <UpdateTestForm siteId={site._id} />
+          <UpdateSiteForm siteId={site._id} initialValues={site}/>
           <hr/>
           <h1 syle={{marginTop: '3rem'}}>Tests</h1>
           <div className="siteTestsTable">

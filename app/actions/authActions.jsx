@@ -3,40 +3,32 @@ import {browserHistory} from 'react-router';
 
 import {SIGNIN_URL, SIGNUP_URL} from 'api';
 
-import {startLoading, endLoading} from 'react-loading-indicator-component';
-import {mainLoader} from 'loaders';
-
 import * as alertActions from './alertActions';
 
 
 export function loginUser({email, password}) {
   return function(dispatch) {
-    dispatch(startLoading(mainLoader, "Logging in..."));
-    axios.post(SIGNIN_URL, {email: email.toLowerCase(), password})
+    return axios.post(SIGNIN_URL, {email: email.toLowerCase(), password})
       .then((response) => {
         dispatch(authUser(response.data.user_id));
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user_id', response.data.user_id);
         browserHistory.push('/dashboard');
-        dispatch(endLoading(mainLoader));
       })
       .catch((response) => {
         dispatch(alertActions.addAlert("Incorrect username or password.", 'danger'));
-        dispatch(endLoading(mainLoader));
       });
   }
 }
 
 export function signupUser({email, password}) {
   return function(dispatch) {
-    dispatch(startLoading(mainLoader, "Signing up..."));
-    axios.post(SIGNUP_URL, {email: email.toLowerCase(), password})
+    return axios.post(SIGNUP_URL, {email: email.toLowerCase(), password})
       .then(response => {
         dispatch(authUser(response.data.user_id));
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user_id', response.data.user_id);
         browserHistory.push('/dashboard');
-        dispatch(endLoading(mainLoader));
       })
       .catch((response) => {
         if (response.data && response.data.error) {
@@ -48,7 +40,6 @@ export function signupUser({email, password}) {
         } else {
           dispatch(alertActions.addAlert("Could not create alert.", 'danger'));
         }
-        dispatch(endLoading(mainLoader));
       });
   }
 }

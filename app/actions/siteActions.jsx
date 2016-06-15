@@ -53,16 +53,13 @@ export var setAllSites = (sites) => {
 
 export function beginCreateSite(url) {
   return (dispatch, getStore) => {
-    dispatch(startLoading(mainLoader, "Creating site..."));
     return axios.post(USER_SITES_URL(USER_ID()), {url}, {headers: {authorization: AUTH_TOKEN()} })
     .then((response) => {
       dispatch(createSite(response.data.site));
-      dispatch(endLoading(mainLoader));
     })
     .catch((response) => {
       console.log(response);
       dispatch(addAlert("Could not create site.", 'danger'));
-      dispatch(endLoading(mainLoader));
     });
   }
 }
@@ -101,16 +98,13 @@ export function beginDeleteTest(siteId, testId) {
 
 export function beginDeleteSite(site_id) {
   return (dispatch, getStore) => {
-    dispatch(startLoading(mainLoader, "Deleting site..."));
     return axios.delete(SITE_URL(USER_ID(), site_id), {headers: {authorization: AUTH_TOKEN()}})
       .then((response) => {
         dispatch(deleteSite(site_id));
-        dispatch(endLoading(mainLoader));
       })
       .catch((response) => {
         console.log(response);
         dispatch(addAlert("Could not delete site.", 'danger'));
-        dispatch(endLoading(mainLoader));
       });
   }
 }

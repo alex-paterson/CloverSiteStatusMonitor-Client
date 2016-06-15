@@ -7,7 +7,8 @@ import LoadingIndicator from '../../LoadingIndicator';
 import {beginUpdateSite} from 'actions';
 
 
-export var UpdateTestForm = React.createClass({
+// export var renderUpdateSiteForm(initialValues) 
+export var UpdateSiteForm = React.createClass({
   onSubmit: function() {
     var {dispatch, siteId, fields: {name, url}, startLoading, endLoading} = this.props;
     startLoading("Loading!");
@@ -61,4 +62,4 @@ var formOptions = {
 }
 
 
-export default reduxForm(formOptions, null, null)(LoadingComponent(UpdateTestForm, LoadingIndicator));
+export default reduxForm(formOptions, null, null)(LoadingComponent(UpdateSiteForm, LoadingIndicator));

@@ -1,12 +1,18 @@
 import React from 'react';
 import {browserHistory} from 'react-router';
 import { reduxForm } from 'redux-form';
+import {LoadingComponent} from 'react-loading-indicator-component';
 
+import LoadingIndicator from './LoadingIndicator';
 import {signupUser} from 'actions';
 
 export var Signup = React.createClass({
   onSubmit: function(formProps) {
-    this.props.signupUser(formProps);
+    var {signupUser, startLoading, endLoading} = this.props;
+    startLoading("Signing up...");
+    signupUser(formProps).then(() => {
+      endLoading();
+    });
   },
   render: function() {
     var {handleSubmit, fields: {email, password}} = this.props;
@@ -47,4 +53,4 @@ export default reduxForm({
   form: 'signup',
   fields: ['email', 'password'],
   validate
-}, null, {signupUser})(Signup);
+}, null, {signupUser})(LoadingComponent(Signup, LoadingIndicator));
