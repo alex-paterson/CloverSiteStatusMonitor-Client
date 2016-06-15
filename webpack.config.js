@@ -2,7 +2,7 @@ var webpack = require('webpack');
 var envFile = require('node-env-file');
 var path = require('path');
 
-process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 PROD = (process.env.NODE_ENV === 'production');
 
 try {
@@ -19,7 +19,27 @@ module.exports = {
   externals: {
     jquery: 'jQuery'
   },
-  plugins: [
+  plugins: PROD ? [
+
+    new webpack.ProvidePlugin({
+      '$': 'jquery',
+      'jQuery': 'jquery'
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        API_URL: JSON.stringify(process.env.API_URL),
+      }
+    }),
+    new ExtractTextPlugin('bundle.css')
+
+  ] : [
+
     new webpack.ProvidePlugin({
       '$': 'jquery',
       'jQuery': 'jquery'
@@ -29,7 +49,9 @@ module.exports = {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         API_URL: JSON.stringify(process.env.API_URL),
       }
-    })
+    }),
+    new ExtractTextPlugin('bundle.css')
+
   ],
   output: {
     path: 'public',
