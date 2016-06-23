@@ -19,7 +19,7 @@ export var Login = React.createClass({
     return (
       <div className="row">
         <div className="small-11 medium-6 columns small-centered">
-          <h1>Login In</h1>
+          <h1>Log In</h1>
           <form onSubmit={handleSubmit(this.onSubmit)}>
             <label>Email {email.touched && email.error && <span className="login-form-error"> - {email.error}</span>}
               <input type="email" ref="email" placeholder="Email" {...email}/>
