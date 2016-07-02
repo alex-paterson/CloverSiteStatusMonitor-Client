@@ -27,5 +27,6 @@ export {
 } from './siteActions';
 
 export {
-  getUserPayload
+  getUserPayload,
+  beginDeleteAccount
 } from './userActions';

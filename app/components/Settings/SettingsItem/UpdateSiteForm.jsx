@@ -2,12 +2,13 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {reduxForm} from 'redux-form';
 import {LoadingComponent} from 'react-loading-indicator-component';
+import {browserHistory} from 'react-router';
 
 import LoadingIndicator from '../../LoadingIndicator';
 import {beginUpdateSite} from 'actions';
 
 
-// export var renderUpdateSiteForm(initialValues) 
+// export var renderUpdateSiteForm(initialValues)
 export var UpdateSiteForm = React.createClass({
   onSubmit: function() {
     var {dispatch, siteId, fields: {name, url}, startLoading, endLoading} = this.props;

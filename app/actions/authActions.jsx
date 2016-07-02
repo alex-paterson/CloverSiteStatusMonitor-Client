@@ -4,6 +4,8 @@ import {browserHistory} from 'react-router';
 import {SIGNIN_URL, SIGNUP_URL} from 'api';
 
 import * as alertActions from './alertActions';
+import * as userActions from './userActions';
+import {setAllSites} from './siteActions';
 
 
 export function loginUser({email, password}) {
@@ -13,9 +15,13 @@ export function loginUser({email, password}) {
         dispatch(authUser(response.data.user_id));
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user_id', response.data.user_id);
+        if (response.data.sites) {
+          dispatch(setAllSites(response.data.sites));
+        }
         browserHistory.push('/dashboard');
       })
       .catch((response) => {
+        console.log(response)
         dispatch(alertActions.addAlert("Incorrect username or password.", 'danger'));
       });
   }

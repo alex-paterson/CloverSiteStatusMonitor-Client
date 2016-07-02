@@ -8,7 +8,7 @@ var Home = (props) => {
         <h1 style={{textAlign: 'center'}}>Clover</h1>
         <h2 style={{textAlign: 'center'}}>Keeping An Eye On Your Web Assets</h2>
         <div className="btn-group">
-          <Link className="button hollow" to="/signin" style={{marginRight: '1rem'}}><div>Sign In</div></Link>
+          <Link className="button hollow" to="/login" style={{marginRight: '1rem'}}><div>Sign In</div></Link>
           <Link className="button" to="/signup"><div>Sign Up</div></Link>
         </div>
         <div className="img-container">
